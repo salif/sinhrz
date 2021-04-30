@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Sinhrz
+GenericName=Sinhrz
+Comment=Sync two folders
+Icon=emblem-synchronizing
+Type=Application
+Categories=Utility
+Keywords=sync
+Exec=sinhrz tui
+Terminal=true

@@ -1,0 +1,25 @@
+{
+	"name": "@salif/sinhrz",
+	"version": "0.0.1",
+	"description": "A simple folder synchronisation tool written in Bash",
+	"preferGlobal": true,
+	"bin": {
+		"sinhrz": "./sinhrz.bash"
+	},
+	"scripts": {
+		"test": "bash test.bash"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/salif/sinhrz.git"
+	},
+	"keywords": [
+		"sync"
+	],
+	"author": "Salif Mehmed <mail@salif.eu>",
+	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/salif/sinhrz/issues"
+	},
+	"homepage": "https://github.com/salif/sinhrz#readme"
+}
