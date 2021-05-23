@@ -18,3 +18,13 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+/.gradle
+/app/build/
+/app/bin/
+!/gradle/wrapper/gradle-wrapper.jar
+.idea/
+.vscode/
+.project
+.classpath
+.settings/
