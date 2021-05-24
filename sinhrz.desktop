@@ -7,5 +7,5 @@ Icon=emblem-synchronizing
 Type=Application
 Categories=Utility
 Keywords=sync
-Exec=sinhrz tui
-Terminal=true
+Exec=sinhrz-gui
+Terminal=false
