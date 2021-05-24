@@ -17,12 +17,28 @@
 package eu.salif.sinhrz.impl;
 
 import eu.salif.sinhrz.Args;
+import eu.salif.sinhrz.Local;
 import eu.salif.sinhrz.Sinhrz;
 
 public class SinhrzImpl implements Sinhrz {
+	private Local local;
 	private Args args;
-	public SinhrzImpl(Args args) {
-		this.setArgs(args);
+
+	public SinhrzImpl(Local local, Args args) {
+		this.local = local;
+		this.args = args;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	public Args getArgs() {
+		return args;
 	}
 
 	public void setArgs(Args args) {
@@ -34,9 +50,9 @@ public class SinhrzImpl implements Sinhrz {
 		System.out.printf("Under development%n---%n%s%n%s%n%s%n%s%n%s%n%s%n%b%n",
 			this.args.getSinhrzFileName(),
 			this.args.getSinhrzLockFileName(),
-			this.args.getLocal(),
+			this.args.getLocalPath(),
 			this.args.getLocalName(),
-			this.args.getRemote(),
+			this.args.getRemotePath(),
 			this.args.getRemoteName(),
 			this.args.getIsOneWay());
 	}

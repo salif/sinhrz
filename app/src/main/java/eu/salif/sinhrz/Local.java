@@ -16,12 +16,18 @@
 
 package eu.salif.sinhrz;
 
-public interface Args {
-	String getSinhrzFileName();
-	String getSinhrzLockFileName();
-	String getLocalPath();
-	String getLocalName();
-	String getRemotePath();
-	String getRemoteName();
-	boolean getIsOneWay();
+public interface Local {
+	String getEnvSinhrzFileName();
+	String getDefaultSinhrzFileName();
+	String getEnvSinhrzLockFileName();
+	String getDefaultSinhrzLockFileName();
+	String getEnvLocalPath();
+	String getEnvLocalName();
+	String getDefaultLocalName();
+	String getEnvRemotePath();
+	String getEnvRemoteName();
+	String getDefaultRemoteName();
+	String getEnvOneWay();
+	String getError();
+	String getErrStringCanNotBeEmpty();
 }

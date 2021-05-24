@@ -8,6 +8,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jetbrains:annotations:20.1.0'
     testImplementation 'junit:junit:4.13.1'
 
     implementation 'com.google.guava:guava:30.0-jre'

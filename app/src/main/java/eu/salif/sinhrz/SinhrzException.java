@@ -16,12 +16,8 @@
 
 package eu.salif.sinhrz;
 
-public interface Args {
-	String getSinhrzFileName();
-	String getSinhrzLockFileName();
-	String getLocalPath();
-	String getLocalName();
-	String getRemotePath();
-	String getRemoteName();
-	boolean getIsOneWay();
+public class SinhrzException extends Exception {
+	public SinhrzException(String message) {
+		super(message);
+	}
 }

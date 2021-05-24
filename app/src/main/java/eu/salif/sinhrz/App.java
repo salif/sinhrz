@@ -18,9 +18,16 @@ package eu.salif.sinhrz;
 
 import eu.salif.sinhrz.impl.ArgsImpl;
 import eu.salif.sinhrz.impl.SinhrzImpl;
+import eu.salif.sinhrz.local.EnglishLocal;
 
 public class App {
     public static void main(String[] args) {
-    	new SinhrzImpl(new ArgsImpl()).sync();
-    }
+    	final Local local = new EnglishLocal();
+		try {
+			new SinhrzImpl(local, new ArgsImpl(local)).sync();
+		} catch (SinhrzException e) {
+			System.err.printf("%s: %s%n", local.getError(), e.getLocalizedMessage());
+			System.exit(1);
+		}
+	}
 }

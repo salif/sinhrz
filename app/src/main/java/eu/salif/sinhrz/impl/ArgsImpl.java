@@ -17,25 +17,32 @@
 package eu.salif.sinhrz.impl;
 
 import eu.salif.sinhrz.Args;
-import eu.salif.sinhrz.Const;
+import eu.salif.sinhrz.Local;
+import eu.salif.sinhrz.SinhrzException;
 
 public class ArgsImpl implements Args {
+	private Local local;
 	private String sinhrzFileName;
 	private String sinhrzLockFileName;
-	private String local;
+	private String localPath;
 	private String localName;
-	private String remote;
+	private String remotePath;
 	private String remoteName;
 	private boolean isOneWay;
 
-	public ArgsImpl() {
-		this.setSinhrzFileName(getEnv(Const.ENV_SINHRZ_FILE, Const.DEFAULT_SINHRZ_FILE));
-		this.setSinhrzLockFileName(getEnv(Const.ENV_SINHRZ_LOCK_FILE, Const.DEFAULT_SINHRZ_LOCK_FILE));
-		this.setLocal(getEnv(Const.ENV_LOCAL, Const.DEFAULT_LOCAL));
-		this.setLocalName(getEnv(Const.ENV_LOCAL_NAME, Const.DEFAULT_LOCAL_NAME));
-		this.setRemote(getEnv(Const.ENV_REMOTE, Const.DEFAULT_REMOTE));
-		this.setRemoteName(getEnv(Const.ENV_REMOTE_NAME, Const.DEFAULT_REMOTE_NAME));
-		this.setIsOneWay(System.getenv(Const.ENV_ONE_WAY) != null);
+	public ArgsImpl(Local local) throws SinhrzException {
+		this.setLocal(local);
+		this.init();
+	}
+
+	private void init() throws SinhrzException {
+		this.setSinhrzFileName(getEnv(this.local.getEnvSinhrzFileName(), this.local.getDefaultSinhrzFileName()));
+		this.setSinhrzLockFileName(getEnv(this.local.getEnvSinhrzLockFileName(), this.local.getDefaultSinhrzLockFileName()));
+		this.setLocalPath(getEnv(this.local.getEnvLocalPath(), ""));
+		this.setLocalName(getEnv(this.local.getEnvLocalName(), this.local.getDefaultLocalName()));
+		this.setRemotePath(getEnv(this.local.getEnvRemotePath(), ""));
+		this.setRemoteName(getEnv(this.local.getEnvRemoteName(), this.local.getDefaultRemoteName()));
+		this.setIsOneWay(System.getenv(this.local.getEnvOneWay()) != null);
 	}
 
 	private String getEnv(String envName, String defaultValue) {
@@ -47,6 +54,15 @@ public class ArgsImpl implements Args {
 		}
 	}
 
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	@Override
 	public String getSinhrzFileName() {
 		return sinhrzFileName;
 	}
@@ -55,6 +71,7 @@ public class ArgsImpl implements Args {
 		this.sinhrzFileName = sinhrzFileName;
 	}
 
+	@Override
 	public String getSinhrzLockFileName() {
 		return sinhrzLockFileName;
 	}
@@ -63,14 +80,19 @@ public class ArgsImpl implements Args {
 		this.sinhrzLockFileName = sinhrzLockFileName;
 	}
 
-	public String getLocal() {
-		return local;
+	@Override
+	public String getLocalPath() {
+		return localPath;
 	}
 
-	public void setLocal(String local) {
-		this.local = local;
+	public void setLocalPath(String localPath) throws SinhrzException {
+		if (localPath.isBlank()) {
+			throw new SinhrzException(String.format(this.local.getErrStringCanNotBeEmpty(), this.local.getEnvLocalPath()));
+		}
+		this.localPath = localPath;
 	}
 
+	@Override
 	public String getLocalName() {
 		return localName;
 	}
@@ -79,14 +101,19 @@ public class ArgsImpl implements Args {
 		this.localName = localName;
 	}
 
-	public String getRemote() {
-		return remote;
+	@Override
+	public String getRemotePath() {
+		return remotePath;
 	}
 
-	public void setRemote(String remote) {
-		this.remote = remote;
+	public void setRemotePath(String remotePath) throws SinhrzException {
+		if (remotePath.isBlank()) {
+			throw new SinhrzException(String.format(this.local.getErrStringCanNotBeEmpty(), this.local.getEnvRemotePath()));
+		}
+		this.remotePath = remotePath;
 	}
 
+	@Override
 	public String getRemoteName() {
 		return remoteName;
 	}
@@ -95,6 +122,7 @@ public class ArgsImpl implements Args {
 		this.remoteName = remoteName;
 	}
 
+	@Override
 	public boolean getIsOneWay() {
 		return isOneWay;
 	}
