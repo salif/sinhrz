@@ -20,29 +20,29 @@ import eu.salif.sinhrz.Args;
 import eu.salif.sinhrz.Local;
 import eu.salif.sinhrz.SinhrzException;
 
+import java.nio.file.Path;
+
 public class ArgsImpl implements Args {
 	private Local local;
 	private String sinhrzFileName;
 	private String sinhrzLockFileName;
-	private String localPath;
+	private Path localPath;
 	private String localName;
-	private String remotePath;
+	private Path remotePath;
 	private String remoteName;
-	private boolean isOneWay;
+	private boolean oneWay;
+	private boolean init;
 
 	public ArgsImpl(Local local) throws SinhrzException {
 		this.setLocal(local);
-		this.init();
-	}
-
-	private void init() throws SinhrzException {
 		this.setSinhrzFileName(getEnv(this.local.getEnvSinhrzFileName(), this.local.getDefaultSinhrzFileName()));
 		this.setSinhrzLockFileName(getEnv(this.local.getEnvSinhrzLockFileName(), this.local.getDefaultSinhrzLockFileName()));
 		this.setLocalPath(getEnv(this.local.getEnvLocalPath(), ""));
 		this.setLocalName(getEnv(this.local.getEnvLocalName(), this.local.getDefaultLocalName()));
 		this.setRemotePath(getEnv(this.local.getEnvRemotePath(), ""));
 		this.setRemoteName(getEnv(this.local.getEnvRemoteName(), this.local.getDefaultRemoteName()));
-		this.setIsOneWay(System.getenv(this.local.getEnvOneWay()) != null);
+		this.setOneWay(System.getenv(this.local.getEnvOneWay()) != null);
+		this.setInit(System.getenv(this.local.getEnvInit()) != null);
 	}
 
 	private String getEnv(String envName, String defaultValue) {
@@ -54,11 +54,10 @@ public class ArgsImpl implements Args {
 		}
 	}
 
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
+	private void setLocal(Local local) {
+		if (local == null) {
+			throw new NullPointerException();
+		}
 		this.local = local;
 	}
 
@@ -67,7 +66,7 @@ public class ArgsImpl implements Args {
 		return sinhrzFileName;
 	}
 
-	public void setSinhrzFileName(String sinhrzFileName) {
+	private void setSinhrzFileName(String sinhrzFileName) {
 		this.sinhrzFileName = sinhrzFileName;
 	}
 
@@ -76,20 +75,21 @@ public class ArgsImpl implements Args {
 		return sinhrzLockFileName;
 	}
 
-	public void setSinhrzLockFileName(String sinhrzLockFileName) {
+	private void setSinhrzLockFileName(String sinhrzLockFileName) {
 		this.sinhrzLockFileName = sinhrzLockFileName;
 	}
 
 	@Override
-	public String getLocalPath() {
+	public Path getLocalPath() {
 		return localPath;
 	}
 
-	public void setLocalPath(String localPath) throws SinhrzException {
+	private void setLocalPath(String localPath) throws SinhrzException {
 		if (localPath.isBlank()) {
-			throw new SinhrzException(String.format(this.local.getErrStringCanNotBeEmpty(), this.local.getEnvLocalPath()));
+			throw new SinhrzException(String.format(this.local.getErrorStringCanNotBeEmptyMessage(),
+				this.local.getEnvLocalPath()));
 		}
-		this.localPath = localPath;
+		this.localPath = Path.of(localPath);
 	}
 
 	@Override
@@ -97,20 +97,22 @@ public class ArgsImpl implements Args {
 		return localName;
 	}
 
+	@Override
 	public void setLocalName(String localName) {
 		this.localName = localName;
 	}
 
 	@Override
-	public String getRemotePath() {
+	public Path getRemotePath() {
 		return remotePath;
 	}
 
-	public void setRemotePath(String remotePath) throws SinhrzException {
+	private void setRemotePath(String remotePath) throws SinhrzException {
 		if (remotePath.isBlank()) {
-			throw new SinhrzException(String.format(this.local.getErrStringCanNotBeEmpty(), this.local.getEnvRemotePath()));
+			throw new SinhrzException(String.format(this.local.getErrorStringCanNotBeEmptyMessage(),
+				this.local.getEnvRemotePath()));
 		}
-		this.remotePath = remotePath;
+		this.remotePath = Path.of(remotePath);
 	}
 
 	@Override
@@ -118,16 +120,31 @@ public class ArgsImpl implements Args {
 		return remoteName;
 	}
 
+	@Override
 	public void setRemoteName(String remoteName) {
 		this.remoteName = remoteName;
 	}
 
 	@Override
-	public boolean getIsOneWay() {
-		return isOneWay;
+	public boolean getOneWay() {
+		return oneWay;
 	}
 
-	public void setIsOneWay(boolean isOneWay) {
-		this.isOneWay = isOneWay;
+	private void setOneWay(boolean oneWay) throws SinhrzException {
+		// TODO
+		if (oneWay) {
+			throw new SinhrzException(String.format(this.local.getErrorUnsupportedMessage(),
+				this.local.getEnvOneWay()));
+		}
+		this.oneWay = oneWay;
+	}
+
+	@Override
+	public boolean getInit() {
+		return init;
+	}
+
+	private void setInit(boolean init) {
+		this.init = init;
 	}
 }

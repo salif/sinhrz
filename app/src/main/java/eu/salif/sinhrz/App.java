@@ -26,7 +26,7 @@ public class App {
 		try {
 			new SinhrzImpl(local, new ArgsImpl(local)).sync();
 		} catch (SinhrzException e) {
-			System.err.printf("%s: %s%n", local.getError(), e.getLocalizedMessage());
+			System.err.printf("%s: %s%n", local.getErrorMessage(), e.getLocalizedMessage());
 			System.exit(1);
 		}
 	}

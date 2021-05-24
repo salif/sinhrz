@@ -37,7 +37,7 @@ public class EnglishLocal implements Local {
 
 	@Override
 	public String getDefaultSinhrzLockFileName() {
-		return ".local.sinhrz";
+		return ".lock.sinhrz";
 	}
 
 	@Override
@@ -71,17 +71,44 @@ public class EnglishLocal implements Local {
 	}
 
 	@Override
+	public String getEnvInit() {
+		return "SINHRZ_INIT";
+	}
+
+	@Override
 	public String getEnvOneWay() {
 		return "SINHRZ_ONE_WAY";
 	}
 
 	@Override
-	public String getError() {
+	public String getErrorMessage() {
 		return "Error";
 	}
 
 	@Override
-	public String getErrStringCanNotBeEmpty() {
+	public String getErrorUnsupportedMessage() {
+		return "%s is not supported yet";
+	}
+
+	@Override
+	public String getErrorStringCanNotBeEmptyMessage() {
 		return "%s can not be empty";
+	}
+
+	@Override
+	public String getErrorStringExistsInsideStringMessage() {
+		// TODO better message
+		return "%s exists inside %s";
+	}
+
+	@Override
+	public String getErrorStringDoesNotExistsInsideStringMessage() {
+		// TODO better message
+		return "%s does not exists inside %s";
+	}
+
+	@Override
+	public String getErrorStringCanNotBeCreatedMessage() {
+		return "%s can not be created";
 	}
 }

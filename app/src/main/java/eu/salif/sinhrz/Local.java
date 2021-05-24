@@ -27,7 +27,12 @@ public interface Local {
 	String getEnvRemotePath();
 	String getEnvRemoteName();
 	String getDefaultRemoteName();
+	String getEnvInit();
 	String getEnvOneWay();
-	String getError();
-	String getErrStringCanNotBeEmpty();
+	String getErrorMessage();
+	String getErrorUnsupportedMessage();
+	String getErrorStringCanNotBeEmptyMessage();
+	String getErrorStringExistsInsideStringMessage();
+	String getErrorStringDoesNotExistsInsideStringMessage();
+	String getErrorStringCanNotBeCreatedMessage();
 }

@@ -16,12 +16,17 @@
 
 package eu.salif.sinhrz;
 
+import java.nio.file.Path;
+
 public interface Args {
 	String getSinhrzFileName();
 	String getSinhrzLockFileName();
-	String getLocalPath();
+	Path getLocalPath();
 	String getLocalName();
-	String getRemotePath();
+	void setLocalName(String localName);
+	Path getRemotePath();
 	String getRemoteName();
-	boolean getIsOneWay();
+	void setRemoteName(String remoteName);
+	boolean getOneWay();
+	boolean getInit();
 }
