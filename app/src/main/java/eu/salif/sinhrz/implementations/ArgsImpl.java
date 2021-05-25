@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz.impl;
+package eu.salif.sinhrz.implementations;
 
 import eu.salif.sinhrz.Args;
-import eu.salif.sinhrz.Local;
+import eu.salif.sinhrz.Localisation;
 import eu.salif.sinhrz.SinhrzException;
 
 import java.nio.file.Path;
 
 public class ArgsImpl implements Args {
-	private Local local;
+	private Localisation localisation;
 	private String sinhrzFileName;
 	private String sinhrzLockFileName;
 	private Path localPath;
@@ -33,16 +33,30 @@ public class ArgsImpl implements Args {
 	private boolean oneWay;
 	private boolean init;
 
-	public ArgsImpl(Local local) throws SinhrzException {
-		this.setLocal(local);
-		this.setSinhrzFileName(getEnv(this.local.getEnvSinhrzFileName(), this.local.getDefaultSinhrzFileName()));
-		this.setSinhrzLockFileName(getEnv(this.local.getEnvSinhrzLockFileName(), this.local.getDefaultSinhrzLockFileName()));
-		this.setLocalPath(getEnv(this.local.getEnvLocalPath(), ""));
-		this.setLocalName(getEnv(this.local.getEnvLocalName(), this.local.getDefaultLocalName()));
-		this.setRemotePath(getEnv(this.local.getEnvRemotePath(), ""));
-		this.setRemoteName(getEnv(this.local.getEnvRemoteName(), this.local.getDefaultRemoteName()));
-		this.setOneWay(System.getenv(this.local.getEnvOneWay()) != null);
-		this.setInit(System.getenv(this.local.getEnvInit()) != null);
+	public ArgsImpl(Localisation localisation) throws SinhrzException {
+		this.setLocalisation(localisation);
+		this.setSinhrzFileName(getEnv(
+			this.localisation.ENV_SINHRZ_FILENAME(),
+			this.localisation.DEFAULT_SINHRZ_FILENAME()));
+		this.setSinhrzLockFileName(getEnv(
+			this.localisation.ENV_SINHRZ_LOCK_FILENAME(),
+			this.localisation.DEFAULT_SINHRZ_LOCK_FILENAME()));
+		this.setLocalPath(getEnv(
+			this.localisation.ENV_LOCAL_PATH(),
+			""));
+		this.setLocalName(getEnv(
+			this.localisation.ENV_LOCAL_NAME(),
+			this.localisation.DEFAULT_LOCAL_NAME()));
+		this.setRemotePath(getEnv(
+			this.localisation.ENV_REMOTE_PATH(),
+			""));
+		this.setRemoteName(getEnv(
+			this.localisation.ENV_REMOTE_NAME(),
+			this.localisation.DEFAULT_REMOTE_NAME()));
+		this.setOneWay(System.getenv(
+			this.localisation.ENV_ONE_WAY()) != null);
+		this.setInit(System.getenv(
+			this.localisation.ENV_INIT()) != null);
 	}
 
 	private String getEnv(String envName, String defaultValue) {
@@ -54,11 +68,8 @@ public class ArgsImpl implements Args {
 		}
 	}
 
-	private void setLocal(Local local) {
-		if (local == null) {
-			throw new NullPointerException();
-		}
-		this.local = local;
+	private void setLocalisation(Localisation localisation) {
+		this.localisation = localisation;
 	}
 
 	@Override
@@ -86,8 +97,8 @@ public class ArgsImpl implements Args {
 
 	private void setLocalPath(String localPath) throws SinhrzException {
 		if (localPath.isBlank()) {
-			throw new SinhrzException(String.format(this.local.getErrorStringCanNotBeEmptyMessage(),
-				this.local.getEnvLocalPath()));
+			throw new SinhrzException(String.format(this.localisation.ERROR_STRING_CAN_NOT_BE_EMPTY(),
+				this.localisation.ENV_LOCAL_PATH()));
 		}
 		this.localPath = Path.of(localPath);
 	}
@@ -109,8 +120,8 @@ public class ArgsImpl implements Args {
 
 	private void setRemotePath(String remotePath) throws SinhrzException {
 		if (remotePath.isBlank()) {
-			throw new SinhrzException(String.format(this.local.getErrorStringCanNotBeEmptyMessage(),
-				this.local.getEnvRemotePath()));
+			throw new SinhrzException(String.format(this.localisation.ERROR_STRING_CAN_NOT_BE_EMPTY(),
+				this.localisation.ENV_REMOTE_PATH()));
 		}
 		this.remotePath = Path.of(remotePath);
 	}
@@ -131,10 +142,10 @@ public class ArgsImpl implements Args {
 	}
 
 	private void setOneWay(boolean oneWay) throws SinhrzException {
-		// TODO
+		// TODO support it
 		if (oneWay) {
-			throw new SinhrzException(String.format(this.local.getErrorUnsupportedMessage(),
-				this.local.getEnvOneWay()));
+			throw new SinhrzException(String.format(this.localisation.ERROR_UNSUPPORTED(),
+				this.localisation.ENV_ONE_WAY()));
 		}
 		this.oneWay = oneWay;
 	}

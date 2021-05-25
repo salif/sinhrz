@@ -20,13 +20,22 @@ import java.nio.file.Path;
 
 public interface Args {
 	String getSinhrzFileName();
+
 	String getSinhrzLockFileName();
+
 	Path getLocalPath();
+
 	String getLocalName();
+
 	void setLocalName(String localName);
+
 	Path getRemotePath();
+
 	String getRemoteName();
+
 	void setRemoteName(String remoteName);
+
 	boolean getOneWay();
+
 	boolean getInit();
 }

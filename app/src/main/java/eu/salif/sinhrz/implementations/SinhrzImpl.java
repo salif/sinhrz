@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz.impl;
+package eu.salif.sinhrz.implementations;
 
 import eu.salif.sinhrz.Args;
-import eu.salif.sinhrz.Local;
+import eu.salif.sinhrz.Localisation;
 import eu.salif.sinhrz.Sinhrz;
 import eu.salif.sinhrz.SinhrzException;
 
@@ -26,16 +26,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class SinhrzImpl implements Sinhrz {
-	private Local local;
+	private Localisation localisation;
 	private Args args;
 
-	public SinhrzImpl(Local local, Args args) throws SinhrzException {
-		this.setLocal(local);
+	public SinhrzImpl(Localisation local, Args args) throws SinhrzException {
+		this.setLocalisation(local);
 		this.setArgs(args);
 	}
 
-	private void setLocal(Local local) {
-		this.local = local;
+	private void setLocalisation(Localisation localisation) {
+		this.localisation = localisation;
 	}
 
 	private void setArgs(Args args) throws SinhrzException {
@@ -46,13 +46,15 @@ public class SinhrzImpl implements Sinhrz {
 	private void validateArgs() throws SinhrzException {
 		Path localLockFilePath = this.args.getLocalPath().resolve(this.args.getSinhrzLockFileName());
 		if (Files.exists(localLockFilePath)) {
-			throw new SinhrzException(String.format(this.local.getErrorStringExistsInsideStringMessage(),
+			throw new SinhrzException(String.format(
+				this.localisation.ERROR_STRING_EXISTS_INSIDE_STRING(),
 				this.args.getSinhrzLockFileName(),
 				this.args.getLocalName()));
 		}
 		Path remoteLockFilePath = this.args.getRemotePath().resolve(this.args.getSinhrzLockFileName());
 		if (Files.exists(remoteLockFilePath)) {
-			throw new SinhrzException(String.format(this.local.getErrorStringExistsInsideStringMessage(),
+			throw new SinhrzException(String.format(
+				this.localisation.ERROR_STRING_EXISTS_INSIDE_STRING(),
 				this.args.getSinhrzLockFileName(),
 				this.args.getRemoteName()));
 		}
@@ -62,12 +64,12 @@ public class SinhrzImpl implements Sinhrz {
 				try {
 					Files.createFile(sinhrzFilePath);
 				} catch (IOException e) {
-					throw new SinhrzException(String.format(this.local.getErrorStringCanNotBeCreatedMessage(),
-						sinhrzFilePath));
+					throw new SinhrzException(String.format(
+						this.localisation.ERROR_STRING_CAN_NOT_BE_CREATED(), sinhrzFilePath));
 				}
-			}
-			else {
-				throw new SinhrzException(String.format(this.local.getErrorStringDoesNotExistsInsideStringMessage(),
+			} else {
+				throw new SinhrzException(String.format(
+					this.localisation.ERROR_STRING_DOES_NOT_EXISTS_INSIDE_STRING(),
 					this.args.getSinhrzFileName(), this.args.getLocalName()));
 			}
 		}
@@ -75,6 +77,6 @@ public class SinhrzImpl implements Sinhrz {
 
 	@Override
 	public void sync() throws SinhrzException {
-		throw new SinhrzException(String.format(this.local.getErrorUnsupportedMessage(), "sync"));
+		throw new SinhrzException(String.format(this.localisation.ERROR_UNSUPPORTED(), "sync"));
 	}
 }
