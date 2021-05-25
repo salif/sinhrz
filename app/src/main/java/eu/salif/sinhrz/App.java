@@ -16,18 +16,30 @@
 
 package eu.salif.sinhrz;
 
-import eu.salif.sinhrz.impl.ArgsImpl;
-import eu.salif.sinhrz.impl.SinhrzImpl;
-import eu.salif.sinhrz.local.EnglishLocal;
+import eu.salif.sinhrz.implementations.ArgsImpl;
+import eu.salif.sinhrz.implementations.SinhrzImpl;
+import eu.salif.sinhrz.localisations.BulgarianLocalisation;
+import eu.salif.sinhrz.localisations.EnglishLocalisation;
+
+import java.util.Locale;
 
 public class App {
-    public static void main(String[] args) {
-    	final Local local = new EnglishLocal();
+	public static void main(String[] args) {
+		Localisation localisation = getLocalisation();
 		try {
-			new SinhrzImpl(local, new ArgsImpl(local)).sync();
+			new SinhrzImpl(localisation, new ArgsImpl(localisation)).sync();
 		} catch (SinhrzException e) {
-			System.err.printf("%s: %s%n", local.getErrorMessage(), e.getLocalizedMessage());
+			System.err.printf("%s: %s%n", localisation.ERROR_MESSAGE(), e.getLocalizedMessage());
 			System.exit(1);
+		}
+	}
+
+	private static Localisation getLocalisation() {
+		String language = Locale.getDefault().getLanguage();
+		if (new Locale("bg").getLanguage().equals(language)) {
+			return new BulgarianLocalisation();
+		} else {
+			return new EnglishLocalisation();
 		}
 	}
 }
