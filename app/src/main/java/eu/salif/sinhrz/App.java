@@ -27,9 +27,9 @@ public class App {
 	public static void main(String[] args) {
 		Localisation localisation = getLocalisation();
 		try {
-			new SinhrzImpl(localisation, new ArgsImpl(localisation)).sync();
+			new SinhrzImpl(new ArgsImpl(localisation)).sync();
 		} catch (SinhrzException e) {
-			System.err.printf("%s: %s%n", localisation.ERROR_MESSAGE(), e.getLocalizedMessage());
+			e.print(localisation);
 			System.exit(1);
 		}
 	}

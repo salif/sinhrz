@@ -23,15 +23,23 @@ public abstract class Localisation {
 
 	public abstract String ERROR_MESSAGE();
 
-	public abstract String ERROR_UNSUPPORTED();
+	public abstract String WARNING_MESSAGE();
 
-	public abstract String ERROR_STRING_CAN_NOT_BE_EMPTY();
+	public abstract String ERROR_IS_NOT_SUPPORTED_YET(String s);
 
-	public abstract String ERROR_STRING_EXISTS_INSIDE_STRING();
+	public abstract String ERROR_IS_NOT_INIT(String s);
 
-	public abstract String ERROR_STRING_DOES_NOT_EXISTS_INSIDE_STRING();
+	public abstract String ERROR_CAN_NOT_BE_EMPTY(String s);
 
-	public abstract String ERROR_STRING_CAN_NOT_BE_CREATED();
+	public abstract String ERROR_DOES_NOT_EXIST(String s);
+
+	public abstract String ERROR_IS_LOCKED(String s, String n);
+
+	public abstract String ERROR_CAN_NOT_BE_CREATED(String s, String m);
+
+	public abstract String ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(String s, String m);
+
+	public abstract String ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(String s, String m);
 
 	public String ENV_SINHRZ_FILENAME() {
 		return "SINHRZ_FILE";
@@ -67,9 +75,5 @@ public abstract class Localisation {
 
 	public String ENV_INIT() {
 		return "SINHRZ_INIT";
-	}
-
-	public String ENV_ONE_WAY() {
-		return "SINHRZ_ONE_WAY";
 	}
 }

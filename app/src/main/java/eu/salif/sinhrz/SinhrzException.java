@@ -20,4 +20,8 @@ public class SinhrzException extends Exception {
 	public SinhrzException(String message) {
 		super(message);
 	}
+
+	public void print(Localisation localisation) {
+		System.err.printf("%s: %s%n", localisation.ERROR_MESSAGE(), this.getLocalizedMessage());
+	}
 }

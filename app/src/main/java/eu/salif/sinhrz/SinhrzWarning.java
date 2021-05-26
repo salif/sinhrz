@@ -16,26 +16,13 @@
 
 package eu.salif.sinhrz;
 
-import java.nio.file.Path;
+public class SinhrzWarning extends Exception {
 
-public interface Args {
-	Localisation getLocalisation();
+	public SinhrzWarning(String message) {
+		super(message);
+	}
 
-	String getSinhrzFileName();
-
-	String getSinhrzLockFileName();
-
-	Path getLocalPath();
-
-	String getLocalName();
-
-	void setLocalName(String localName);
-
-	Path getRemotePath();
-
-	String getRemoteName();
-
-	void setRemoteName(String remoteName);
-
-	boolean getInit();
+	public void print(Localisation localisation) {
+		System.err.printf("%s: %s%n", localisation.WARNING_MESSAGE(), this.getLocalizedMessage());
+	}
 }

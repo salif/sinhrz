@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz;
+package eu.salif.sinhrz.implementations;
 
-import java.nio.file.Path;
+import java.io.File;
+import java.io.FilenameFilter;
 
-public interface Args {
-	Localisation getLocalisation();
+public class FileNameFilter implements FilenameFilter {
+	private final String sinhrzFileName;
+	private final String lockFileName;
 
-	String getSinhrzFileName();
+	FileNameFilter(String sinhrzFileName, String lockFileName) {
+		this.sinhrzFileName = sinhrzFileName;
+		this.lockFileName = lockFileName;
+	}
 
-	String getSinhrzLockFileName();
-
-	Path getLocalPath();
-
-	String getLocalName();
-
-	void setLocalName(String localName);
-
-	Path getRemotePath();
-
-	String getRemoteName();
-
-	void setRemoteName(String remoteName);
-
-	boolean getInit();
+	@Override
+	public boolean accept(File dir, String name) {
+		return !name.equals(sinhrzFileName) && !name.equals(lockFileName);
+	}
 }

@@ -30,7 +30,6 @@ public class ArgsImpl implements Args {
 	private String localName;
 	private Path remotePath;
 	private String remoteName;
-	private boolean oneWay;
 	private boolean init;
 
 	public ArgsImpl(Localisation localisation) throws SinhrzException {
@@ -53,8 +52,6 @@ public class ArgsImpl implements Args {
 		this.setRemoteName(getEnv(
 			this.localisation.ENV_REMOTE_NAME(),
 			this.localisation.DEFAULT_REMOTE_NAME()));
-		this.setOneWay(System.getenv(
-			this.localisation.ENV_ONE_WAY()) != null);
 		this.setInit(System.getenv(
 			this.localisation.ENV_INIT()) != null);
 	}
@@ -66,6 +63,11 @@ public class ArgsImpl implements Args {
 		} else {
 			return value;
 		}
+	}
+
+	@Override
+	public Localisation getLocalisation() {
+		return localisation;
 	}
 
 	private void setLocalisation(Localisation localisation) {
@@ -97,10 +99,9 @@ public class ArgsImpl implements Args {
 
 	private void setLocalPath(String localPath) throws SinhrzException {
 		if (localPath.isBlank()) {
-			throw new SinhrzException(String.format(this.localisation.ERROR_STRING_CAN_NOT_BE_EMPTY(),
-				this.localisation.ENV_LOCAL_PATH()));
+			throw new SinhrzException(this.localisation.ERROR_CAN_NOT_BE_EMPTY(this.localisation.ENV_LOCAL_PATH()));
 		}
-		this.localPath = Path.of(localPath);
+		this.localPath = Path.of(localPath).normalize();
 	}
 
 	@Override
@@ -120,10 +121,9 @@ public class ArgsImpl implements Args {
 
 	private void setRemotePath(String remotePath) throws SinhrzException {
 		if (remotePath.isBlank()) {
-			throw new SinhrzException(String.format(this.localisation.ERROR_STRING_CAN_NOT_BE_EMPTY(),
-				this.localisation.ENV_REMOTE_PATH()));
+			throw new SinhrzException(this.localisation.ERROR_CAN_NOT_BE_EMPTY(this.localisation.ENV_REMOTE_PATH()));
 		}
-		this.remotePath = Path.of(remotePath);
+		this.remotePath = Path.of(remotePath).normalize();
 	}
 
 	@Override
@@ -134,20 +134,6 @@ public class ArgsImpl implements Args {
 	@Override
 	public void setRemoteName(String remoteName) {
 		this.remoteName = remoteName;
-	}
-
-	@Override
-	public boolean getOneWay() {
-		return oneWay;
-	}
-
-	private void setOneWay(boolean oneWay) throws SinhrzException {
-		// TODO support it
-		if (oneWay) {
-			throw new SinhrzException(String.format(this.localisation.ERROR_UNSUPPORTED(),
-				this.localisation.ENV_ONE_WAY()));
-		}
-		this.oneWay = oneWay;
 	}
 
 	@Override

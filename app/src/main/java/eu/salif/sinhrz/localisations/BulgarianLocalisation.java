@@ -35,27 +35,47 @@ public class BulgarianLocalisation extends Localisation {
 	}
 
 	@Override
-	public String ERROR_UNSUPPORTED() {
-		return "%s все още не се поддържа";
+	public String WARNING_MESSAGE() {
+		return "Предупреждение";
 	}
 
 	@Override
-	public String ERROR_STRING_CAN_NOT_BE_EMPTY() {
-		return "%s не може да бъде празно";
+	public String ERROR_IS_NOT_SUPPORTED_YET(String s) {
+		return String.format("%s все още не се поддържа", s);
 	}
 
 	@Override
-	public String ERROR_STRING_EXISTS_INSIDE_STRING() {
-		return "%s съществува в %s";
+	public String ERROR_IS_NOT_INIT(String s) {
+		return String.format("%s не е инициализирано", s);
 	}
 
 	@Override
-	public String ERROR_STRING_DOES_NOT_EXISTS_INSIDE_STRING() {
-		return "%s не съществува в %s";
+	public String ERROR_CAN_NOT_BE_EMPTY(String s) {
+		return String.format("%s не може да бъде празно", s);
 	}
 
 	@Override
-	public String ERROR_STRING_CAN_NOT_BE_CREATED() {
-		return "%s не може да бъде създадено";
+	public String ERROR_DOES_NOT_EXIST(String s) {
+		return String.format("%s не съществува", s);
+	}
+
+	@Override
+	public String ERROR_IS_LOCKED(String s, String n) {
+		return String.format("%s е заключено, нужно е ръчно изтриване на заключващия файл %s", s, n);
+	}
+
+	@Override
+	public String ERROR_CAN_NOT_BE_CREATED(String s, String m) {
+		return String.format("%s не може да бъде създадено%n%s", s, m);
+	}
+
+	@Override
+	public String ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(String s, String m) {
+		return String.format("неуспешно заключване на %s%n%s", s, m);
+	}
+
+	@Override
+	public String ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(String s, String m) {
+		return String.format("неуспешно отключване на %s%n%s", s, m);
 	}
 }

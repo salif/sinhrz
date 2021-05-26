@@ -21,12 +21,12 @@ import eu.salif.sinhrz.Localisation;
 public class EnglishLocalisation extends Localisation {
 	@Override
 	public String DEFAULT_LOCAL_NAME() {
-		return "local";
+		return "local directory";
 	}
 
 	@Override
 	public String DEFAULT_REMOTE_NAME() {
-		return "remote";
+		return "remote directory";
 	}
 
 	@Override
@@ -35,29 +35,47 @@ public class EnglishLocalisation extends Localisation {
 	}
 
 	@Override
-	public String ERROR_UNSUPPORTED() {
-		return "%s is not supported yet";
+	public String WARNING_MESSAGE() {
+		return "Warning";
 	}
 
 	@Override
-	public String ERROR_STRING_CAN_NOT_BE_EMPTY() {
-		return "%s can not be empty";
+	public String ERROR_IS_NOT_SUPPORTED_YET(String s) {
+		return String.format("%s is not supported yet", s);
 	}
 
 	@Override
-	public String ERROR_STRING_EXISTS_INSIDE_STRING() {
-		// TODO better message
-		return "%s exists inside %s";
+	public String ERROR_IS_NOT_INIT(String s) {
+		return String.format("%s is not initialized", s);
 	}
 
 	@Override
-	public String ERROR_STRING_DOES_NOT_EXISTS_INSIDE_STRING() {
-		// TODO better message
-		return "%s does not exists inside %s";
+	public String ERROR_CAN_NOT_BE_EMPTY(String s) {
+		return String.format("%s can not be empty", s);
 	}
 
 	@Override
-	public String ERROR_STRING_CAN_NOT_BE_CREATED() {
-		return "%s can not be created";
+	public String ERROR_DOES_NOT_EXIST(String s) {
+		return String.format("%s does not exist", s);
+	}
+
+	@Override
+	public String ERROR_IS_LOCKED(String s, String n) {
+		return String.format("%s is locked, needs manually deleting the lock file %s", s, n);
+	}
+
+	@Override
+	public String ERROR_CAN_NOT_BE_CREATED(String s, String m) {
+		return String.format("%s can not be created%n%s", s, m);
+	}
+
+	@Override
+	public String ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(String s, String m) {
+		return String.format("can not create lock file in %s%n%s", s, m);
+	}
+
+	@Override
+	public String ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(String s, String m) {
+		return String.format("can not delete lock file in %s%n%s", s, m);
 	}
 }
