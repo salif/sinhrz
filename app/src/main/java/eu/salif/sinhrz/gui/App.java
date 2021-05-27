@@ -16,10 +16,8 @@
 
 package eu.salif.sinhrz.gui;
 
-import javax.swing.*;
-
 public class App {
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new SinhrzFrame(eu.salif.sinhrz.App.getLocalisation()).setVisible(true));
+		new SinhrzFrame(eu.salif.sinhrz.App.getLocalisation()).setVisible(true);
 	}
 }

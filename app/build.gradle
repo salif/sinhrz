@@ -15,5 +15,11 @@ dependencies {
 }
 
 application {
-    mainClass = 'eu.salif.sinhrz.App'
+	getMainClass().set('eu.salif.sinhrz.gui.App')
+}
+
+jar {
+	from {
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	}
 }

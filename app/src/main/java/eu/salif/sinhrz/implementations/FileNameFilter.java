@@ -28,16 +28,8 @@ public class FileNameFilter implements FilenameFilter {
 		setLockFileName(lockFileName);
 	}
 
-	public String getSinhrzFileName() {
-		return sinhrzFileName;
-	}
-
 	public void setSinhrzFileName(String sinhrzFileName) {
 		this.sinhrzFileName = sinhrzFileName;
-	}
-
-	public String getLockFileName() {
-		return lockFileName;
 	}
 
 	public void setLockFileName(String lockFileName) {

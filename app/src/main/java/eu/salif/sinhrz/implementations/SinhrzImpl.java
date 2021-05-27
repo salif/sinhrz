@@ -138,48 +138,74 @@ public class SinhrzImpl implements Sinhrz {
 	@Override
 	public boolean sync() throws SinhrzException {
 		this.lock();
+		if (this.args.getDoVerbose()) {
+			this.args.getOutStream().printf("'%s': '%s'%n'%s': '%s'%n",
+				this.args.getLocalLabel(),
+				this.args.getLocalPath().toAbsolutePath(),
+				this.args.getRemoteLabel(),
+				this.args.getRemotePath().toAbsolutePath());
+		}
 		try {
 			List<String> sinhrzFiles = Files.readAllLines(this.paths.getLocalSinhrzFilePath());
 			Set<String> localFiles = list(this.args.getLocalPath().toFile(), Path.of(""));
 			Set<String> remoteFiles = list(this.args.getRemotePath().toFile(), Path.of(""));
 			Set<String> syncedFiles = new TreeSet<>(localFiles);
+
 			syncedFiles.retainAll(remoteFiles);
 			localFiles.removeAll(syncedFiles);
 			remoteFiles.removeAll(syncedFiles);
+
 			int filesDeletedFromLocal = 0;
 			int filesSentFromLocalToRemote = 0;
 			int filesDeletedFromRemote = 0;
 			int filesSentFromRemoteToLocal = 0;
+
 			for (String localFile : localFiles) {
 				if (sinhrzFiles.contains(localFile)) {
 					Files.delete(this.args.getLocalPath().resolve(localFile));
 					filesDeletedFromLocal += 1;
+					if (this.args.getDoVerbose()) {
+						this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETING_FROM(
+							localFile, this.args.getLocalLabel()));
+					}
 				} else {
 					Files.copy(this.args.getLocalPath().resolve(localFile),
 						this.args.getRemotePath().resolve(localFile));
 					filesSentFromLocalToRemote += 1;
+					if (this.args.getDoVerbose()) {
+						this.args.getOutStream().print(this.args.getLocalisation().INFO_COPYING_FROM_TO(
+							localFile, this.args.getLocalLabel(), this.args.getRemoteLabel()));
+					}
 				}
 			}
 			for (String remoteFile : remoteFiles) {
 				if (sinhrzFiles.contains(remoteFile)) {
 					Files.delete(this.args.getRemotePath().resolve(remoteFile));
 					filesDeletedFromRemote += 1;
+					if (this.args.getDoVerbose()) {
+						this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETING_FROM(
+							remoteFile, this.args.getRemoteLabel()));
+					}
 				} else {
 					Files.copy(this.args.getRemotePath().resolve(remoteFile),
 						this.args.getLocalPath().resolve(remoteFile));
 					filesSentFromRemoteToLocal += 1;
+					if (this.args.getDoVerbose()) {
+						this.args.getOutStream().print(this.args.getLocalisation().INFO_COPYING_FROM_TO(
+							remoteFile, this.args.getRemoteLabel(), this.args.getLocalLabel()));
+					}
 				}
 			}
 			Set<String> newSinhrzFileContent = list(this.args.getLocalPath().toFile(), Path.of(""));
 			Files.write(this.paths.getLocalSinhrzFilePath(), newSinhrzFileContent, StandardCharsets.UTF_8);
-			this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETED_AND_SENT(
+			this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETED_AND_COPIED(
 				filesDeletedFromLocal, this.args.getLocalLabel(),
 				filesSentFromLocalToRemote, this.args.getLocalLabel(), this.args.getRemoteLabel()));
-			this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETED_AND_SENT(
+			this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETED_AND_COPIED(
 				filesDeletedFromRemote, this.args.getRemoteLabel(),
 				filesSentFromRemoteToLocal, this.args.getRemoteLabel(), this.args.getLocalLabel()));
 		} catch (IOException e) {
-			throw new SinhrzException(e.getLocalizedMessage());
+			throw new SinhrzException(e.toString());
 		}
 		this.unlock();
 		return true;

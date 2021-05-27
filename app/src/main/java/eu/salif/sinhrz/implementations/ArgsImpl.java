@@ -34,6 +34,7 @@ public class ArgsImpl implements Args {
 	private String remoteLabel;
 	private Path remotePath;
 	private boolean doInit;
+	private boolean doVerbose;
 
 	public ArgsImpl(Localisation localisation, PrintStream errStream, PrintStream outStream) throws SinhrzException {
 		this.setLocalisation(localisation);
@@ -59,6 +60,8 @@ public class ArgsImpl implements Args {
 			""));
 		this.setDoInit(System.getenv(
 			this.localisation.ENV_DO_INIT()) != null);
+		this.setDoVerbose(System.getenv(
+			this.localisation.ENV_DO_VERBOSE()) != null);
 	}
 
 	public static String getEnv(String envName, String defaultValue) {
@@ -165,4 +168,14 @@ public class ArgsImpl implements Args {
 	private void setDoInit(boolean doInit) {
 		this.doInit = doInit;
 	}
+
+	@Override
+	public boolean getDoVerbose() {
+		return doVerbose;
+	}
+
+	private void setDoVerbose(boolean doVerbose) {
+		this.doVerbose = doVerbose;
+	}
+
 }

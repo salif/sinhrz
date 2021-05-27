@@ -78,15 +78,23 @@ public abstract class Localisation {
 
 	public abstract String GUI_DO_INIT();
 
+	public String ENV_DO_VERBOSE() {
+		return "SINHRZ_VERBOSE";
+	}
+
+	public abstract String GUI_DO_VERBOSE();
+
 	public abstract String SYNC_MESSAGE();
 
 	public abstract String ERROR_MESSAGE();
 
 	public abstract String WARNING_MESSAGE();
 
-	public abstract String INFO_DELETED_AND_SENT(int sd, String sn, int ss, String sf, String st);
+	public abstract String INFO_DELETED_AND_COPIED(int sd, String sn, int ss, String sf, String st);
 
-	public abstract String ERROR_IS_NOT_SUPPORTED_YET(String s);
+	public abstract String INFO_DELETING_FROM(String s, String f);
+
+	public abstract String INFO_COPYING_FROM_TO(String s, String f, String t);
 
 	public abstract String ERROR_IS_NOT_INIT(String s);
 

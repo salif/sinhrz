@@ -39,4 +39,6 @@ public interface Args {
 	Path getRemotePath();
 
 	boolean getDoInit();
+
+	boolean getDoVerbose();
 }

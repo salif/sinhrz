@@ -71,6 +71,11 @@ public class EnglishLocalisation extends Localisation {
 	}
 
 	@Override
+	public String GUI_DO_VERBOSE() {
+		return "Verbose logging";
+	}
+
+	@Override
 	public String SYNC_MESSAGE() {
 		return "sync";
 	}
@@ -86,47 +91,52 @@ public class EnglishLocalisation extends Localisation {
 	}
 
 	@Override
-	public String INFO_DELETED_AND_SENT(int sd, String sn, int ss, String sf, String st) {
-		return String.format("%s files deleted from %s%n%s files sent from %s to %s%n", sd, sn, ss, sf, st);
+	public String INFO_DELETED_AND_COPIED(int sd, String sn, int ss, String sf, String st) {
+		return String.format("%s files deleted from '%s'%n%s files copied from '%s' to '%s'%n", sd, sn, ss, sf, st);
 	}
 
 	@Override
-	public String ERROR_IS_NOT_SUPPORTED_YET(String s) {
-		return String.format("%s is not supported yet", s);
+	public String INFO_DELETING_FROM(String s, String f) {
+		return String.format("deleting '%s' from '%s'%n", s, f);
+	}
+
+	@Override
+	public String INFO_COPYING_FROM_TO(String s, String f, String t) {
+		return String.format("copying '%s' from '%s' to '%s'%n", s, f, t);
 	}
 
 	@Override
 	public String ERROR_IS_NOT_INIT(String s) {
-		return String.format("%s is not initialized", s);
+		return String.format("'%s' is not initialized", s);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_BE_EMPTY(String s) {
-		return String.format("%s can not be empty", s);
+		return String.format("'%s' can not be empty", s);
 	}
 
 	@Override
 	public String ERROR_DOES_NOT_EXIST(String s) {
-		return String.format("%s does not exist", s);
+		return String.format("'%s' does not exist", s);
 	}
 
 	@Override
 	public String ERROR_IS_LOCKED(String s, String n) {
-		return String.format("%s is locked, needs manually deleting the lock file %s", s, n);
+		return String.format("'%s' is locked, needs manually deleting the lock file '%s'", s, n);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_BE_CREATED(String s, String m) {
-		return String.format("%s can not be created%n%s", s, m);
+		return String.format("'%s' can not be created%n%s", s, m);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(String s, String m) {
-		return String.format("can not create lock file in %s%n%s", s, m);
+		return String.format("can not create lock file in '%s'%n%s", s, m);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(String s, String m) {
-		return String.format("can not delete lock file in %s%n%s", s, m);
+		return String.format("can not delete lock file in '%s'%n%s", s, m);
 	}
 }

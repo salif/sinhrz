@@ -40,6 +40,7 @@ class SinhrzFrame extends JFrame implements ActionListener {
 	private JTextField inputRemoteLabel;
 	private JTextField inputRemotePath;
 	private JCheckBox inputDoInit;
+	private JCheckBox inputDoVerbose;
 	private PrintStream errStream;
 	private PrintStream outStream;
 
@@ -140,6 +141,14 @@ class SinhrzFrame extends JFrame implements ActionListener {
 		}
 		c.add(inputDoInit);
 
+		inputDoVerbose = new JCheckBox(this.localisation.GUI_DO_VERBOSE());
+		inputDoVerbose.setBounds(230, 350, 250, 30);
+		inputDoVerbose.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+		if (System.getenv(this.localisation.ENV_DO_VERBOSE()) != null) {
+			inputDoVerbose.doClick();
+		}
+		c.add(inputDoVerbose);
+
 		JButton btn = new JButton(this.localisation.SYNC_MESSAGE());
 		btn.setBounds(150, 400, 200, 30);
 		btn.addActionListener(this);
@@ -204,7 +213,12 @@ class SinhrzFrame extends JFrame implements ActionListener {
 				public boolean getDoInit() {
 					return inputDoInit.isSelected();
 				}
-			});
+
+                @Override
+                public boolean getDoVerbose() {
+                    return inputDoVerbose.isSelected();
+                }
+            });
 			boolean success = sinhrz.sync();
 			if (success) {
 				JOptionPane.showMessageDialog(this, outOutputStream.toString());

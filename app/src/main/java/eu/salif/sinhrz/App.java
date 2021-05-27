@@ -31,8 +31,8 @@ public class App {
 		PrintStream outStream = System.out;
 		Sinhrz sinhrz = new SinhrzImpl();
 		try {
-		sinhrz.setArgs(new ArgsImpl(localisation, errStream, outStream));
-		sinhrz.sync();
+			sinhrz.setArgs(new ArgsImpl(localisation, errStream, outStream));
+			sinhrz.sync();
 		} catch (SinhrzException e) {
 			e.print(localisation, errStream);
 			System.exit(1);

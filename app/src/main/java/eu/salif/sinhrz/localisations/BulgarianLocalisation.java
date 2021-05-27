@@ -70,6 +70,11 @@ public class BulgarianLocalisation extends Localisation {
 	}
 
 	@Override
+	public String GUI_DO_VERBOSE() {
+		return "Подробен отчет";
+	}
+
+	@Override
 	public String SYNC_MESSAGE() {
 		return "синхронизирай";
 	}
@@ -85,47 +90,52 @@ public class BulgarianLocalisation extends Localisation {
 	}
 
 	@Override
-	public String INFO_DELETED_AND_SENT(int sd, String sn, int ss, String sf, String st) {
-		return String.format("%s файла изтрити от %s%n%s файла копирани от %s до %s%n", sd, sn, ss, sf, st);
+	public String INFO_DELETED_AND_COPIED(int sd, String sn, int ss, String sf, String st) {
+		return String.format("%s файла изтрити от '%s'%n%s файла копирани от '%s' до '%s'%n", sd, sn, ss, sf, st);
 	}
 
 	@Override
-	public String ERROR_IS_NOT_SUPPORTED_YET(String s) {
-		return String.format("%s все още не се поддържа", s);
+	public String INFO_DELETING_FROM(String s, String f) {
+		return String.format("изтриване на '%s' от '%s'%n", s, f);
+	}
+
+	@Override
+	public String INFO_COPYING_FROM_TO(String s, String f, String t) {
+		return String.format("копиране на '%s' от '%s' към '%s'%n", s, f, t);
 	}
 
 	@Override
 	public String ERROR_IS_NOT_INIT(String s) {
-		return String.format("%s не е инициализирано", s);
+		return String.format("'%s' не е инициализирано", s);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_BE_EMPTY(String s) {
-		return String.format("%s не може да бъде празно", s);
+		return String.format("'%s' не може да бъде празно", s);
 	}
 
 	@Override
 	public String ERROR_DOES_NOT_EXIST(String s) {
-		return String.format("%s не съществува", s);
+		return String.format("'%s' не съществува", s);
 	}
 
 	@Override
 	public String ERROR_IS_LOCKED(String s, String n) {
-		return String.format("%s е заключено, нужно е ръчно изтриване на заключващия файл %s", s, n);
+		return String.format("'%s' е заключено, нужно е ръчно изтриване на заключващия файл '%s'", s, n);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_BE_CREATED(String s, String m) {
-		return String.format("%s не може да бъде създадено%n%s", s, m);
+		return String.format("'%s' не може да бъде създадено%n%s", s, m);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(String s, String m) {
-		return String.format("неуспешно заключване на %s%n%s", s, m);
+		return String.format("неуспешно заключване на '%s'%n%s", s, m);
 	}
 
 	@Override
 	public String ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(String s, String m) {
-		return String.format("неуспешно отключване на %s%n%s", s, m);
+		return String.format("неуспешно отключване на '%s'%n%s", s, m);
 	}
 }
