@@ -20,11 +20,27 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 public class FileNameFilter implements FilenameFilter {
-	private final String sinhrzFileName;
-	private final String lockFileName;
+	private String sinhrzFileName;
+	private String lockFileName;
 
 	FileNameFilter(String sinhrzFileName, String lockFileName) {
+		setSinhrzFileName(sinhrzFileName);
+		setLockFileName(lockFileName);
+	}
+
+	public String getSinhrzFileName() {
+		return sinhrzFileName;
+	}
+
+	public void setSinhrzFileName(String sinhrzFileName) {
 		this.sinhrzFileName = sinhrzFileName;
+	}
+
+	public String getLockFileName() {
+		return lockFileName;
+	}
+
+	public void setLockFileName(String lockFileName) {
 		this.lockFileName = lockFileName;
 	}
 

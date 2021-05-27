@@ -19,14 +19,60 @@ package eu.salif.sinhrz.localisations;
 import eu.salif.sinhrz.Localisation;
 
 public class EnglishLocalisation extends Localisation {
+
 	@Override
-	public String DEFAULT_LOCAL_NAME() {
-		return "local directory";
+	public String LOC_NAME() {
+		return "Synchronizer";
 	}
 
 	@Override
-	public String DEFAULT_REMOTE_NAME() {
-		return "remote directory";
+	public String GUI_SINHRZ_FILENAME() {
+		return "Sinhrz file name";
+	}
+
+	@Override
+	public String GUI_SINHRZ_LOCK_FILENAME() {
+		return "Sinhrz lock file name";
+	}
+
+	@Override
+	public String DEFAULT_LOCAL_LABEL() {
+		return "local";
+	}
+
+	@Override
+	public String GUI_LOCAL_LABEL() {
+		return "Local directory label";
+	}
+
+	@Override
+	public String GUI_LOCAL_PATH() {
+		return "Local directory path";
+	}
+
+	@Override
+	public String DEFAULT_REMOTE_LABEL() {
+		return "remote";
+	}
+
+	@Override
+	public String GUI_REMOTE_LABEL() {
+		return "Remote directory label";
+	}
+
+	@Override
+	public String GUI_REMOTE_PATH() {
+		return "Remote directory path";
+	}
+
+	@Override
+	public String GUI_DO_INIT() {
+		return "Initialize";
+	}
+
+	@Override
+	public String SYNC_MESSAGE() {
+		return "sync";
 	}
 
 	@Override
@@ -37,6 +83,11 @@ public class EnglishLocalisation extends Localisation {
 	@Override
 	public String WARNING_MESSAGE() {
 		return "Warning";
+	}
+
+	@Override
+	public String INFO_DELETED_AND_SENT(int sd, String sn, int ss, String sf, String st) {
+		return String.format("%s files deleted from %s%n%s files sent from %s to %s%n", sd, sn, ss, sf, st);
 	}
 
 	@Override

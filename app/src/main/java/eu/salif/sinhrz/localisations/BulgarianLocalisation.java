@@ -20,13 +20,58 @@ import eu.salif.sinhrz.Localisation;
 
 public class BulgarianLocalisation extends Localisation {
 	@Override
-	public String DEFAULT_LOCAL_NAME() {
+	public String LOC_NAME() {
+		return "Синхронизатор";
+	}
+
+	@Override
+	public String GUI_SINHRZ_FILENAME() {
+		return "Име на синхронизиращия файл";
+	}
+
+	@Override
+	public String GUI_SINHRZ_LOCK_FILENAME() {
+		return "Име на заключващия файл";
+	}
+
+	@Override
+	public String DEFAULT_LOCAL_LABEL() {
 		return "локална директория";
 	}
 
 	@Override
-	public String DEFAULT_REMOTE_NAME() {
-		return "отдалечена директория";
+	public String GUI_LOCAL_LABEL() {
+		return "Име на локалн. директория";
+	}
+
+	@Override
+	public String GUI_LOCAL_PATH() {
+		return "Път към локалн. директория";
+	}
+
+	@Override
+	public String DEFAULT_REMOTE_LABEL() {
+		return "отдалечен. директория";
+	}
+
+	@Override
+	public String GUI_REMOTE_LABEL() {
+		return "Име на отдалечен. директория";
+	}
+
+	@Override
+	public String GUI_REMOTE_PATH() {
+		return "Път към отдалечен. директория";
+	}
+
+	@Override
+	public String GUI_DO_INIT() {
+		return "Инициализиране";
+	}
+
+	@Override
+	public String SYNC_MESSAGE() {
+		return "синхронизирай";
 	}
 
 	@Override
@@ -37,6 +82,11 @@ public class BulgarianLocalisation extends Localisation {
 	@Override
 	public String WARNING_MESSAGE() {
 		return "Предупреждение";
+	}
+
+	@Override
+	public String INFO_DELETED_AND_SENT(int sd, String sn, int ss, String sf, String st) {
+		return String.format("%s файла изтрити от %s%n%s файла копирани от %s до %s%n", sd, sn, ss, sf, st);
 	}
 
 	@Override

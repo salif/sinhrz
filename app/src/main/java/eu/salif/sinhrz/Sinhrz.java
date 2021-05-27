@@ -17,5 +17,6 @@
 package eu.salif.sinhrz;
 
 public interface Sinhrz {
-	void sync() throws SinhrzException;
+	void setArgs(Args args) throws SinhrzException;
+	boolean sync() throws SinhrzException;
 }

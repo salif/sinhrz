@@ -16,13 +16,15 @@
 
 package eu.salif.sinhrz;
 
+import java.io.PrintStream;
+
 public class SinhrzWarning extends Exception {
 
 	public SinhrzWarning(String message) {
 		super(message);
 	}
 
-	public void print(Localisation localisation) {
-		System.err.printf("%s: %s%n", localisation.WARNING_MESSAGE(), this.getLocalizedMessage());
+	public void print(Localisation localisation, PrintStream p) {
+		p.printf("%s: %s%n", localisation.WARNING_MESSAGE(), this.getLocalizedMessage());
 	}
 }

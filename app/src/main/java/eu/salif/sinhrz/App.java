@@ -21,20 +21,25 @@ import eu.salif.sinhrz.implementations.SinhrzImpl;
 import eu.salif.sinhrz.localisations.BulgarianLocalisation;
 import eu.salif.sinhrz.localisations.EnglishLocalisation;
 
+import java.io.PrintStream;
 import java.util.Locale;
 
 public class App {
 	public static void main(String[] args) {
 		Localisation localisation = getLocalisation();
+		PrintStream errStream = System.err;
+		PrintStream outStream = System.out;
+		Sinhrz sinhrz = new SinhrzImpl();
 		try {
-			new SinhrzImpl(new ArgsImpl(localisation)).sync();
+		sinhrz.setArgs(new ArgsImpl(localisation, errStream, outStream));
+		sinhrz.sync();
 		} catch (SinhrzException e) {
-			e.print(localisation);
+			e.print(localisation, errStream);
 			System.exit(1);
 		}
 	}
 
-	private static Localisation getLocalisation() {
+	public static Localisation getLocalisation() {
 		String language = Locale.getDefault().getLanguage();
 		if (new Locale("bg").getLanguage().equals(language)) {
 			return new BulgarianLocalisation();

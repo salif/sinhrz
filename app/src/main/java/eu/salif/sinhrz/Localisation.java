@@ -17,13 +17,74 @@
 package eu.salif.sinhrz;
 
 public abstract class Localisation {
-	public abstract String DEFAULT_LOCAL_NAME();
 
-	public abstract String DEFAULT_REMOTE_NAME();
+	public String NAME() {
+		return "Sinhrz";
+	}
+
+	public abstract String LOC_NAME();
+
+	public String ENV_SINHRZ_FILENAME() {
+		return "SINHRZ_FILENAME";
+	}
+
+	public String DEFAULT_SINHRZ_FILENAME() {
+		return ".sinhrz";
+	}
+
+	public abstract String GUI_SINHRZ_FILENAME();
+
+	public String ENV_SINHRZ_LOCK_FILENAME() {
+		return "SINHRZ_LOCK_FILENAME";
+	}
+
+	public String DEFAULT_SINHRZ_LOCK_FILENAME() {
+		return ".lock.sinhrz";
+	}
+
+	public abstract String GUI_SINHRZ_LOCK_FILENAME();
+
+	public String ENV_LOCAL_LABEL() {
+		return "SINHRZ_LOCAL_LABEL";
+	}
+
+	public abstract String DEFAULT_LOCAL_LABEL();
+
+	public abstract String GUI_LOCAL_LABEL();
+
+	public String ENV_LOCAL_PATH() {
+		return "SINHRZ_LOCAL_PATH";
+	}
+
+	public abstract String GUI_LOCAL_PATH();
+
+	public String ENV_REMOTE_LABEL() {
+		return "SINHRZ_REMOTE_LABEL";
+	}
+
+	public abstract String DEFAULT_REMOTE_LABEL();
+
+	public abstract String GUI_REMOTE_LABEL();
+
+	public String ENV_REMOTE_PATH() {
+		return "SINHRZ_REMOTE_PATH";
+	}
+
+	public abstract String GUI_REMOTE_PATH();
+
+	public String ENV_DO_INIT() {
+		return "SINHRZ_INIT";
+	}
+
+	public abstract String GUI_DO_INIT();
+
+	public abstract String SYNC_MESSAGE();
 
 	public abstract String ERROR_MESSAGE();
 
 	public abstract String WARNING_MESSAGE();
+
+	public abstract String INFO_DELETED_AND_SENT(int sd, String sn, int ss, String sf, String st);
 
 	public abstract String ERROR_IS_NOT_SUPPORTED_YET(String s);
 
@@ -40,40 +101,4 @@ public abstract class Localisation {
 	public abstract String ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(String s, String m);
 
 	public abstract String ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(String s, String m);
-
-	public String ENV_SINHRZ_FILENAME() {
-		return "SINHRZ_FILE";
-	}
-
-	public String DEFAULT_SINHRZ_FILENAME() {
-		return ".sinhrz";
-	}
-
-	public String ENV_SINHRZ_LOCK_FILENAME() {
-		return "SINHRZ_LOCK_FILE";
-	}
-
-	public String DEFAULT_SINHRZ_LOCK_FILENAME() {
-		return ".lock.sinhrz";
-	}
-
-	public String ENV_LOCAL_PATH() {
-		return "SINHRZ_LOCAL";
-	}
-
-	public String ENV_LOCAL_NAME() {
-		return "SINHRZ_LOCAL_NAME";
-	}
-
-	public String ENV_REMOTE_PATH() {
-		return "SINHRZ_REMOTE";
-	}
-
-	public String ENV_REMOTE_NAME() {
-		return "SINHRZ_REMOTE_NAME";
-	}
-
-	public String ENV_INIT() {
-		return "SINHRZ_INIT";
-	}
 }

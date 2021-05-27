@@ -20,43 +20,48 @@ import eu.salif.sinhrz.Args;
 import eu.salif.sinhrz.Localisation;
 import eu.salif.sinhrz.SinhrzException;
 
+import java.io.PrintStream;
 import java.nio.file.Path;
 
 public class ArgsImpl implements Args {
 	private Localisation localisation;
+	private PrintStream errStream;
+	private PrintStream outStream;
 	private String sinhrzFileName;
 	private String sinhrzLockFileName;
+	private String localLabel;
 	private Path localPath;
-	private String localName;
+	private String remoteLabel;
 	private Path remotePath;
-	private String remoteName;
-	private boolean init;
+	private boolean doInit;
 
-	public ArgsImpl(Localisation localisation) throws SinhrzException {
+	public ArgsImpl(Localisation localisation, PrintStream errStream, PrintStream outStream) throws SinhrzException {
 		this.setLocalisation(localisation);
+		this.setErrStream(errStream);
+		this.setOutStream(outStream);
 		this.setSinhrzFileName(getEnv(
 			this.localisation.ENV_SINHRZ_FILENAME(),
 			this.localisation.DEFAULT_SINHRZ_FILENAME()));
 		this.setSinhrzLockFileName(getEnv(
 			this.localisation.ENV_SINHRZ_LOCK_FILENAME(),
 			this.localisation.DEFAULT_SINHRZ_LOCK_FILENAME()));
+		this.setLocalLabel(getEnv(
+			this.localisation.ENV_LOCAL_LABEL(),
+			this.localisation.DEFAULT_LOCAL_LABEL()));
 		this.setLocalPath(getEnv(
 			this.localisation.ENV_LOCAL_PATH(),
 			""));
-		this.setLocalName(getEnv(
-			this.localisation.ENV_LOCAL_NAME(),
-			this.localisation.DEFAULT_LOCAL_NAME()));
+		this.setRemoteLabel(getEnv(
+			this.localisation.ENV_REMOTE_LABEL(),
+			this.localisation.DEFAULT_REMOTE_LABEL()));
 		this.setRemotePath(getEnv(
 			this.localisation.ENV_REMOTE_PATH(),
 			""));
-		this.setRemoteName(getEnv(
-			this.localisation.ENV_REMOTE_NAME(),
-			this.localisation.DEFAULT_REMOTE_NAME()));
-		this.setInit(System.getenv(
-			this.localisation.ENV_INIT()) != null);
+		this.setDoInit(System.getenv(
+			this.localisation.ENV_DO_INIT()) != null);
 	}
 
-	private String getEnv(String envName, String defaultValue) {
+	public static String getEnv(String envName, String defaultValue) {
 		String value = System.getenv(envName);
 		if (value == null || value.isEmpty()) {
 			return defaultValue;
@@ -72,6 +77,24 @@ public class ArgsImpl implements Args {
 
 	private void setLocalisation(Localisation localisation) {
 		this.localisation = localisation;
+	}
+
+	@Override
+	public PrintStream getErrStream() {
+		return errStream;
+	}
+
+	private void setErrStream(PrintStream errStream) {
+		this.errStream = errStream;
+	}
+
+	@Override
+	public PrintStream getOutStream() {
+		return outStream;
+	}
+
+	private void setOutStream(PrintStream outStream) {
+		this.outStream = outStream;
 	}
 
 	@Override
@@ -93,6 +116,15 @@ public class ArgsImpl implements Args {
 	}
 
 	@Override
+	public String getLocalLabel() {
+		return localLabel;
+	}
+
+	private void setLocalLabel(String localLabel) {
+		this.localLabel = localLabel;
+	}
+
+	@Override
 	public Path getLocalPath() {
 		return localPath;
 	}
@@ -105,13 +137,12 @@ public class ArgsImpl implements Args {
 	}
 
 	@Override
-	public String getLocalName() {
-		return localName;
+	public String getRemoteLabel() {
+		return remoteLabel;
 	}
 
-	@Override
-	public void setLocalName(String localName) {
-		this.localName = localName;
+	private void setRemoteLabel(String remoteLabel) {
+		this.remoteLabel = remoteLabel;
 	}
 
 	@Override
@@ -127,21 +158,11 @@ public class ArgsImpl implements Args {
 	}
 
 	@Override
-	public String getRemoteName() {
-		return remoteName;
+	public boolean getDoInit() {
+		return doInit;
 	}
 
-	@Override
-	public void setRemoteName(String remoteName) {
-		this.remoteName = remoteName;
-	}
-
-	@Override
-	public boolean getInit() {
-		return init;
-	}
-
-	private void setInit(boolean init) {
-		this.init = init;
+	private void setDoInit(boolean doInit) {
+		this.doInit = doInit;
 	}
 }

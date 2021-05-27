@@ -16,26 +16,27 @@
 
 package eu.salif.sinhrz;
 
+import java.io.PrintStream;
 import java.nio.file.Path;
 
 public interface Args {
 	Localisation getLocalisation();
 
+	PrintStream getErrStream();
+
+	PrintStream getOutStream();
+
 	String getSinhrzFileName();
 
 	String getSinhrzLockFileName();
 
+	String getLocalLabel();
+
 	Path getLocalPath();
 
-	String getLocalName();
-
-	void setLocalName(String localName);
+	String getRemoteLabel();
 
 	Path getRemotePath();
 
-	String getRemoteName();
-
-	void setRemoteName(String remoteName);
-
-	boolean getInit();
+	boolean getDoInit();
 }

@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
-java -cp "${SINHRZ_JAR:-./sinhrz.jar}" eu.salif.sinhrz.Gui $@
+#!/bin/sh
+exec /usr/bin/env java -cp ./sinhrz.jar eu.salif.sinhrz.gui.App "$@"

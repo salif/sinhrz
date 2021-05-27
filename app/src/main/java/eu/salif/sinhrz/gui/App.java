@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz;
+package eu.salif.sinhrz.gui;
 
-import java.io.PrintStream;
+import javax.swing.*;
 
-public class SinhrzException extends Exception {
-	public SinhrzException(String message) {
-		super(message);
-	}
-
-	public void print(Localisation localisation, PrintStream p) {
-		p.printf("%s: %s%n", localisation.ERROR_MESSAGE(), this.getLocalizedMessage());
+public class App {
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new SinhrzFrame(eu.salif.sinhrz.App.getLocalisation()).setVisible(true));
 	}
 }

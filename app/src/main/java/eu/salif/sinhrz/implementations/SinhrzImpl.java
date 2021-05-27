@@ -35,15 +35,15 @@ public class SinhrzImpl implements Sinhrz {
 	private SinhrzPaths paths;
 	private FileNameFilter fileNameFilter;
 
-	public SinhrzImpl(Args args) throws SinhrzException {
-		this.setArgs(args);
+	public SinhrzImpl() {
+	}
+
+	@Override
+	public void setArgs(Args args) throws SinhrzException {
+		this.args = args;
 		this.setPaths();
 		this.validateArgs();
 		this.setFileNameFilter(new FileNameFilter(this.args.getSinhrzFileName(), this.args.getSinhrzLockFileName()));
-	}
-
-	private void setArgs(Args args) {
-		this.args = args;
 	}
 
 	private void setPaths() {
@@ -69,14 +69,14 @@ public class SinhrzImpl implements Sinhrz {
 		}
 		if (Files.exists(this.paths.getLocalLockFilePath())) {
 			throw new SinhrzException(this.args.getLocalisation().ERROR_IS_LOCKED(
-				this.args.getLocalName(), this.paths.getLocalLockFilePath().toString()));
+				this.args.getLocalLabel(), this.paths.getLocalLockFilePath().toString()));
 		}
 		if (Files.exists(this.paths.getRemoteLockFilePath())) {
 			throw new SinhrzException(this.args.getLocalisation().ERROR_IS_LOCKED(
-				this.args.getRemoteName(), this.paths.getRemoteLockFilePath().toString()));
+				this.args.getRemoteLabel(), this.paths.getRemoteLockFilePath().toString()));
 		}
 		if (!Files.exists(this.paths.getLocalSinhrzFilePath())) {
-			if (this.args.getInit()) {
+			if (this.args.getDoInit()) {
 				try {
 					Files.createFile(this.paths.getLocalSinhrzFilePath());
 				} catch (IOException e) {
@@ -84,7 +84,7 @@ public class SinhrzImpl implements Sinhrz {
 						this.paths.getLocalSinhrzFilePath().toString(), e.toString()));
 				}
 			} else {
-				throw new SinhrzException(this.args.getLocalisation().ERROR_IS_NOT_INIT(this.args.getLocalName()));
+				throw new SinhrzException(this.args.getLocalisation().ERROR_IS_NOT_INIT(this.args.getLocalLabel()));
 			}
 		}
 	}
@@ -94,13 +94,13 @@ public class SinhrzImpl implements Sinhrz {
 			Files.createFile(this.paths.getLocalLockFilePath());
 		} catch (IOException e) {
 			throw new SinhrzException(this.args.getLocalisation().ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(
-				this.args.getLocalName(), e.toString()));
+				this.args.getLocalLabel(), e.toString()));
 		}
 		try {
 			Files.createFile(this.paths.getRemoteLockFilePath());
 		} catch (IOException e) {
 			throw new SinhrzException(this.args.getLocalisation().ERROR_CAN_NOT_CREATE_LOCK_FILE_IN(
-				this.args.getRemoteName(), e.toString()));
+				this.args.getRemoteLabel(), e.toString()));
 		}
 	}
 
@@ -109,13 +109,13 @@ public class SinhrzImpl implements Sinhrz {
 			Files.delete(this.paths.getLocalLockFilePath());
 		} catch (IOException e) {
 			new SinhrzWarning(this.args.getLocalisation().ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(
-				this.args.getLocalName(), e.toString())).print(this.args.getLocalisation());
+				this.args.getLocalLabel(), e.toString())).print(this.args.getLocalisation(), this.args.getErrStream());
 		}
 		try {
 			Files.delete(this.paths.getRemoteLockFilePath());
 		} catch (IOException e) {
 			new SinhrzWarning(this.args.getLocalisation().ERROR_CAN_NOT_DELETE_LOCK_FILE_IN(
-				this.args.getRemoteName(), e.toString())).print(this.args.getLocalisation());
+				this.args.getRemoteLabel(), e.toString())).print(this.args.getLocalisation(), this.args.getErrStream());
 		}
 	}
 
@@ -136,7 +136,7 @@ public class SinhrzImpl implements Sinhrz {
 	}
 
 	@Override
-	public void sync() throws SinhrzException {
+	public boolean sync() throws SinhrzException {
 		this.lock();
 		try {
 			List<String> sinhrzFiles = Files.readAllLines(this.paths.getLocalSinhrzFilePath());
@@ -146,27 +146,42 @@ public class SinhrzImpl implements Sinhrz {
 			syncedFiles.retainAll(remoteFiles);
 			localFiles.removeAll(syncedFiles);
 			remoteFiles.removeAll(syncedFiles);
+			int filesDeletedFromLocal = 0;
+			int filesSentFromLocalToRemote = 0;
+			int filesDeletedFromRemote = 0;
+			int filesSentFromRemoteToLocal = 0;
 			for (String localFile : localFiles) {
 				if (sinhrzFiles.contains(localFile)) {
 					Files.delete(this.args.getLocalPath().resolve(localFile));
+					filesDeletedFromLocal += 1;
 				} else {
 					Files.copy(this.args.getLocalPath().resolve(localFile),
 						this.args.getRemotePath().resolve(localFile));
+					filesSentFromLocalToRemote += 1;
 				}
 			}
 			for (String remoteFile : remoteFiles) {
 				if (sinhrzFiles.contains(remoteFile)) {
 					Files.delete(this.args.getRemotePath().resolve(remoteFile));
+					filesDeletedFromRemote += 1;
 				} else {
 					Files.copy(this.args.getRemotePath().resolve(remoteFile),
 						this.args.getLocalPath().resolve(remoteFile));
+					filesSentFromRemoteToLocal += 1;
 				}
 			}
 			Set<String> newSinhrzFileContent = list(this.args.getLocalPath().toFile(), Path.of(""));
 			Files.write(this.paths.getLocalSinhrzFilePath(), newSinhrzFileContent, StandardCharsets.UTF_8);
+			this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETED_AND_SENT(
+				filesDeletedFromLocal, this.args.getLocalLabel(),
+				filesSentFromLocalToRemote, this.args.getLocalLabel(), this.args.getRemoteLabel()));
+			this.args.getOutStream().print(this.args.getLocalisation().INFO_DELETED_AND_SENT(
+				filesDeletedFromRemote, this.args.getRemoteLabel(),
+				filesSentFromRemoteToLocal, this.args.getRemoteLabel(), this.args.getLocalLabel()));
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new SinhrzException(e.getLocalizedMessage());
 		}
 		this.unlock();
+		return true;
 	}
 }

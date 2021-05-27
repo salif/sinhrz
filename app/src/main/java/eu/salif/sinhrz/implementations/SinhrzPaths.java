@@ -19,25 +19,37 @@ package eu.salif.sinhrz.implementations;
 import java.nio.file.Path;
 
 public class SinhrzPaths {
-	private final Path localSinhrzFilePath;
-	private final Path localLockFilePath;
-	private final Path remoteLockFilePath;
+	private Path localSinhrzFilePath;
+	private Path localLockFilePath;
+	private Path remoteLockFilePath;
 
 	public SinhrzPaths(Path localSinhrzFilePath, Path localLockFilePath, Path remoteLockFilePath) {
-		this.localSinhrzFilePath = localSinhrzFilePath;
-		this.localLockFilePath = localLockFilePath;
-		this.remoteLockFilePath = remoteLockFilePath;
+		setLocalSinhrzFilePath(localSinhrzFilePath);
+		setLocalLockFilePath(localLockFilePath);
+		setRemoteLockFilePath(remoteLockFilePath);
 	}
 
 	public Path getLocalSinhrzFilePath() {
 		return localSinhrzFilePath;
 	}
 
+	public void setLocalSinhrzFilePath(Path localSinhrzFilePath) {
+		this.localSinhrzFilePath = localSinhrzFilePath;
+	}
+
 	public Path getLocalLockFilePath() {
 		return localLockFilePath;
 	}
 
+	public void setLocalLockFilePath(Path localLockFilePath) {
+		this.localLockFilePath = localLockFilePath;
+	}
+
 	public Path getRemoteLockFilePath() {
 		return remoteLockFilePath;
+	}
+
+	public void setRemoteLockFilePath(Path remoteLockFilePath) {
+		this.remoteLockFilePath = remoteLockFilePath;
 	}
 }
