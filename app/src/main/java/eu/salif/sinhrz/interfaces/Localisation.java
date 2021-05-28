@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz;
+package eu.salif.sinhrz.interfaces;
 
 public abstract class Localisation {
 

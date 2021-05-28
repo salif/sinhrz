@@ -16,7 +16,7 @@
 
 package eu.salif.sinhrz.localisations;
 
-import eu.salif.sinhrz.Localisation;
+import eu.salif.sinhrz.interfaces.Localisation;
 
 public class BulgarianLocalisation extends Localisation {
 	@Override
@@ -106,7 +106,7 @@ public class BulgarianLocalisation extends Localisation {
 
 	@Override
 	public String ERROR_IS_NOT_INIT(String s) {
-		return String.format("'%s' не е инициализирано", s);
+		return String.format("'%s' не е инициализирана", s);
 	}
 
 	@Override

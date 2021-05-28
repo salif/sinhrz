@@ -16,10 +16,10 @@
 
 package eu.salif.sinhrz.implementations;
 
-import eu.salif.sinhrz.Args;
-import eu.salif.sinhrz.Sinhrz;
-import eu.salif.sinhrz.SinhrzException;
-import eu.salif.sinhrz.SinhrzWarning;
+import eu.salif.sinhrz.interfaces.Args;
+import eu.salif.sinhrz.interfaces.Sinhrz;
+import eu.salif.sinhrz.errors.SinhrzException;
+import eu.salif.sinhrz.errors.SinhrzWarning;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +41,19 @@ public class SinhrzImpl implements Sinhrz {
 	@Override
 	public void setArgs(Args args) throws SinhrzException {
 		this.args = args;
+		if (this.args.getDoVerbose()) {
+			String m = String.format("%s: '%s'%n%s: '%s'%n%s: '%s'%n%s: '%s'%n",
+				this.args.getLocalisation().GUI_LOCAL_LABEL(),
+				this.args.getLocalLabel(),
+				this.args.getLocalisation().GUI_LOCAL_PATH(),
+				this.args.getLocalPath().toAbsolutePath(),
+				this.args.getLocalisation().GUI_REMOTE_LABEL(),
+				this.args.getRemoteLabel(),
+				this.args.getLocalisation().GUI_REMOTE_PATH(),
+				this.args.getRemotePath().toAbsolutePath());
+			this.args.getErrStream().print(m);
+			this.args.getOutStream().print(m);
+		}
 		this.setPaths();
 		this.validateArgs();
 		this.setFileNameFilter(new FileNameFilter(this.args.getSinhrzFileName(), this.args.getSinhrzLockFileName()));
@@ -138,13 +151,6 @@ public class SinhrzImpl implements Sinhrz {
 	@Override
 	public boolean sync() throws SinhrzException {
 		this.lock();
-		if (this.args.getDoVerbose()) {
-			this.args.getOutStream().printf("'%s': '%s'%n'%s': '%s'%n",
-				this.args.getLocalLabel(),
-				this.args.getLocalPath().toAbsolutePath(),
-				this.args.getRemoteLabel(),
-				this.args.getRemotePath().toAbsolutePath());
-		}
 		try {
 			List<String> sinhrzFiles = Files.readAllLines(this.paths.getLocalSinhrzFilePath());
 			Set<String> localFiles = list(this.args.getLocalPath().toFile(), Path.of(""));

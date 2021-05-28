@@ -16,15 +16,18 @@
 
 package eu.salif.sinhrz;
 
+import eu.salif.sinhrz.errors.SinhrzException;
 import eu.salif.sinhrz.implementations.ArgsImpl;
 import eu.salif.sinhrz.implementations.SinhrzImpl;
+import eu.salif.sinhrz.interfaces.Localisation;
+import eu.salif.sinhrz.interfaces.Sinhrz;
 import eu.salif.sinhrz.localisations.BulgarianLocalisation;
 import eu.salif.sinhrz.localisations.EnglishLocalisation;
 
 import java.io.PrintStream;
 import java.util.Locale;
 
-public class App {
+public class CliApp {
 	public static void main(String[] args) {
 		Localisation localisation = getLocalisation();
 		PrintStream errStream = System.err;

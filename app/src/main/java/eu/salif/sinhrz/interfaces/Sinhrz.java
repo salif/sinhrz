@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz;
+package eu.salif.sinhrz.interfaces;
 
-import java.io.PrintStream;
+import eu.salif.sinhrz.errors.SinhrzException;
 
-public class SinhrzException extends Exception {
-	public SinhrzException(String message) {
-		super(message);
-	}
+public interface Sinhrz {
+	void setArgs(Args args) throws SinhrzException;
 
-	public void print(Localisation localisation, PrintStream p) {
-		p.printf("%s: %s%n", localisation.ERROR_MESSAGE(), this.getLocalizedMessage());
-	}
+	boolean sync() throws SinhrzException;
 }

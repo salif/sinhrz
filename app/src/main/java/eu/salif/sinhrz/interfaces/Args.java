@@ -14,10 +14,31 @@
  * limitations under the License.
  */
 
-package eu.salif.sinhrz.gui;
+package eu.salif.sinhrz.interfaces;
 
-public class App {
-	public static void main(String[] args) {
-		new SinhrzFrame(eu.salif.sinhrz.App.getLocalisation()).setVisible(true);
-	}
+import java.io.PrintStream;
+import java.nio.file.Path;
+
+public interface Args {
+	Localisation getLocalisation();
+
+	PrintStream getErrStream();
+
+	PrintStream getOutStream();
+
+	String getSinhrzFileName();
+
+	String getSinhrzLockFileName();
+
+	String getLocalLabel();
+
+	Path getLocalPath();
+
+	String getRemoteLabel();
+
+	Path getRemotePath();
+
+	boolean getDoInit();
+
+	boolean getDoVerbose();
 }

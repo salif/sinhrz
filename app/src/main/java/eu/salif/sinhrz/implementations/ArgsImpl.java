@@ -16,9 +16,9 @@
 
 package eu.salif.sinhrz.implementations;
 
-import eu.salif.sinhrz.Args;
-import eu.salif.sinhrz.Localisation;
-import eu.salif.sinhrz.SinhrzException;
+import eu.salif.sinhrz.interfaces.Args;
+import eu.salif.sinhrz.interfaces.Localisation;
+import eu.salif.sinhrz.errors.SinhrzException;
 
 import java.io.PrintStream;
 import java.nio.file.Path;

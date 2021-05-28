@@ -15,7 +15,7 @@ dependencies {
 }
 
 application {
-	getMainClass().set('eu.salif.sinhrz.gui.App')
+	mainClass = 'eu.salif.sinhrz.GuiApp'
 }
 
 jar {

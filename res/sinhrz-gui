@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/env java -cp ./sinhrz.jar eu.salif.sinhrz.gui.App "$@"
+exec java -cp /usr/lib/sinhrz/app.jar eu.salif.sinhrz.GuiApp "$@"

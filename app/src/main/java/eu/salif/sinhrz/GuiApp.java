@@ -16,29 +16,10 @@
 
 package eu.salif.sinhrz;
 
-import java.io.PrintStream;
-import java.nio.file.Path;
+import eu.salif.sinhrz.gui.SinhrzFrame;
 
-public interface Args {
-	Localisation getLocalisation();
-
-	PrintStream getErrStream();
-
-	PrintStream getOutStream();
-
-	String getSinhrzFileName();
-
-	String getSinhrzLockFileName();
-
-	String getLocalLabel();
-
-	Path getLocalPath();
-
-	String getRemoteLabel();
-
-	Path getRemotePath();
-
-	boolean getDoInit();
-
-	boolean getDoVerbose();
+public class GuiApp {
+	public static void main(String[] args) {
+		new SinhrzFrame(CliApp.getLocalisation()).setVisible(true);
+	}
 }

@@ -16,10 +16,10 @@
 
 package eu.salif.sinhrz.gui;
 
-import eu.salif.sinhrz.Args;
-import eu.salif.sinhrz.Localisation;
-import eu.salif.sinhrz.Sinhrz;
-import eu.salif.sinhrz.SinhrzException;
+import eu.salif.sinhrz.interfaces.Args;
+import eu.salif.sinhrz.interfaces.Localisation;
+import eu.salif.sinhrz.interfaces.Sinhrz;
+import eu.salif.sinhrz.errors.SinhrzException;
 import eu.salif.sinhrz.implementations.ArgsImpl;
 import eu.salif.sinhrz.implementations.SinhrzImpl;
 
@@ -31,7 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 
-class SinhrzFrame extends JFrame implements ActionListener {
+public class SinhrzFrame extends JFrame implements ActionListener {
 	private final Localisation localisation;
 	private JTextField inputSinhrzFileName;
 	private JTextField inputSinhrzLockFileName;
@@ -44,9 +44,9 @@ class SinhrzFrame extends JFrame implements ActionListener {
 	private PrintStream errStream;
 	private PrintStream outStream;
 
-	SinhrzFrame(Localisation localisation) {
+	public SinhrzFrame(Localisation localisation) {
 		this.localisation = localisation;
-		setTitle(this.localisation.NAME() + " | " + this.localisation.LOC_NAME());
+		setTitle(String.format("%s | %s", this.localisation.NAME(), this.localisation.LOC_NAME()));
 		setSize(500, 500);
 		setLayout(null);
 		addElements();
@@ -214,19 +214,22 @@ class SinhrzFrame extends JFrame implements ActionListener {
 					return inputDoInit.isSelected();
 				}
 
-                @Override
-                public boolean getDoVerbose() {
-                    return inputDoVerbose.isSelected();
-                }
-            });
+				@Override
+				public boolean getDoVerbose() {
+					return inputDoVerbose.isSelected();
+				}
+			});
 			boolean success = sinhrz.sync();
 			if (success) {
-				JOptionPane.showMessageDialog(this, outOutputStream.toString());
+				JTextArea textArea = new JTextArea(outOutputStream.toString());
+				JScrollPane scrollPane = new JScrollPane(textArea);
+				textArea.setEditable(false);
+				scrollPane.setPreferredSize(new Dimension(400, 200));
+				JOptionPane.showMessageDialog(this, scrollPane);
 			}
 		} catch (SinhrzException sinhrzException) {
 			sinhrzException.print(localisation, errStream);
-			JOptionPane.showMessageDialog(this,
-				errOutputStream.toString(),
+			JOptionPane.showMessageDialog(this, errOutputStream.toString(),
 				this.localisation.ERROR_MESSAGE(), JOptionPane.ERROR_MESSAGE);
 		}
 	}

@@ -16,7 +16,7 @@
 
 package eu.salif.sinhrz.localisations;
 
-import eu.salif.sinhrz.Localisation;
+import eu.salif.sinhrz.interfaces.Localisation;
 
 public class EnglishLocalisation extends Localisation {
 
